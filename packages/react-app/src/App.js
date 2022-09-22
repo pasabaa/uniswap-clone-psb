@@ -1,24 +1,24 @@
-import React from 'react';
-import {useEthers} from '@usedapp/core';
+import React from "react";
+import { useEthers } from "@usedapp/core";
 
-import {usePools} from './hooks'
-
-import styles from './styles';
-import {uniswapLogo} from './assets'
-
-import { Exchange, Loader, WalletButton } from './components';
+import styles from "./styles";
+import { usePools } from "./hooks";
+import { uniswapLogo } from "./assets";
+import { Exchange, Loader, WalletButton } from "./components";
 
 const App = () => {
-
-  const {account} = useEthers();
-
-  const [loading, pools] = usePools();
+  const { account } = useEthers();
+  const [poolsLoading, pools] = usePools();
 
   return (
     <div className={styles.container}>
       <div className={styles.innerContainer}>
         <header className={styles.header}>
-          <img src={uniswapLogo} alt="Uniswap Logo" className={'w-16 h-16 object-contain'} />
+          <img
+            src={uniswapLogo}
+            alt="uniswap-logo"
+            className="w-16 h-16 object-contain"
+          />
           <WalletButton />
         </header>
 
@@ -28,26 +28,25 @@ const App = () => {
 
           <div className={styles.exchangeBoxWrapper}>
             <div className={styles.exchangeBox}>
-              <div className='pink_gradient' />
+              <div className="pink_gradient" />
               <div className={styles.exchange}>
-                {
-                  account ? (
-                    loading ? (
-                      <Loader title='Loading pools, please wait!'/>
-                    ) : <Exchange pools={pools} />
-                  ) : <Loader title='Please connect your wallet'/>
-                }
+                {account ? (
+                  poolsLoading ? (
+                    <Loader title="Loading pools, please wait!" />
+                  ) : (
+                    <Exchange pools={pools} />
+                  )
+                ) : (
+                  <Loader title="Please connect your wallet" />
+                )}
               </div>
-              <div className='blue_gradient' />
+              <div className="blue_gradient" />
             </div>
           </div>
-        
         </div>
-
-        
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default App;
